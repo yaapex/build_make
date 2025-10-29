@@ -73,7 +73,11 @@ define generate-common-build-props
     echo "ro.$(1).build.fingerprint?=$${BuildFingerprint:-$(BUILD_FINGERPRINT_FROM_FILE)}" >> $(2);\
     echo "ro.$(1).build.id?=$(BUILD_ID)" >> $(2);\
     echo "ro.$(1).build.tags?=$(BUILD_VERSION_TAGS)" >> $(2);\
-    echo "ro.$(1).build.type=$(TARGET_BUILD_VARIANT)" >> $(2);\
+    if [[ $(TARGET_BUILD_VARIANT) == "eng" ]]; then \
+        echo "ro.$(1).build.type=eng" >> $(2);\
+    else \
+        echo "ro.$(1).build.type=user" >> $(2);\
+    fi; \
     echo "ro.$(1).build.version.incremental=$(BUILD_NUMBER_FROM_FILE)" >> $(2);\
     echo "ro.$(1).build.version.release=$(PLATFORM_VERSION_LAST_STABLE)" >> $(2);\
     echo "ro.$(1).build.version.release_or_codename=$(PLATFORM_VERSION)" >> $(2);\
