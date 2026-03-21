@@ -686,9 +686,10 @@ function lunch()
         depsOnly="true"
     fi
 
-    cd $T > /dev/null
-    vendor/yaap/build/tools/roomservice.py $product $depsOnly
-    cd - > /dev/null
+
+    local T=$(gettop)
+    $T/prebuilts/build-tools/linux-x86/bin/py3-cmd $T/vendor/yaap/build/tools/barista.py $product
+    source_vendorsetup &>/dev/null
 
     # Validate the selection and set all the environment stuff
     _lunch_meat $product $release $variant
